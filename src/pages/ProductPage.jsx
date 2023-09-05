@@ -4,8 +4,14 @@ import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantity
 
 import { TableGrid } from '../components/tables/TableGrid'
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export const ProductPage = () => {
+
+  const data = useSelector( (state) => state.products);
+  const auth = useSelector( (state) => state.auth);
+  console.log(data);
+  console.log(auth);
 
 
   return (
