@@ -4,15 +4,25 @@ import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantity
 
 import { TableGrid } from '../components/tables/TableGrid'
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { dataProducts } from '../data/dataProducts';
+import { setProducts } from '../slice/products/productSlice';
+import { useEffect } from 'react';
+import { getProducts } from '../slice/products/thunks';
 
 export const ProductPage = () => {
 
-  const data = useSelector( (state) => state.products);
+  const { data } = useSelector( (state) => state.products);
   const auth = useSelector( (state) => state.auth);
   console.log(data);
   console.log(auth);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getProducts());
+    //dispatch(setProducts({data: dataProducts}))    
+  }, []);
+  
 
   return (
     <Grid container spacing={2}>
@@ -26,7 +36,7 @@ export const ProductPage = () => {
           </Button>
         </Link>
       </Grid>
-      <TableGrid />
+      <TableGrid dataRows = { data } />
     </Grid>
   )
 }

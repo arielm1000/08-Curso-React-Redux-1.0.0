@@ -1,16 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-
+import {useSelector, useDispatch} from 'react-redux';
 import { dataProducts } from '../data/dataProducts';
+import { getProducts } from '../slice/products/thunks';
 
 export const ProductGalleryPage = () => {
 
+    const { data } = useSelector( (state) => state.products);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+      dispatch(getProducts());
+    }, []);
 
   return (
     <Box>
         <Grid container spacing={4}>
-        { dataProducts.map((prd) => (
+        { data.map((prd) => (
             <Grid key={prd.id} item  xs={12} sm={6} md={4}>
                 <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                 <CardMedia
@@ -19,14 +27,14 @@ export const ProductGalleryPage = () => {
                     // 16:9
                     pt: '100%',
                     }}
-                    image={`/productos/${ prd.img }`}
+                    image={prd.image}
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
                         {prd.title}
                     </Typography>
                     <Typography>
-                        {prd.detail}
+                        {prd.description}
                     </Typography>
                 </CardContent>
                 <CardActions>
