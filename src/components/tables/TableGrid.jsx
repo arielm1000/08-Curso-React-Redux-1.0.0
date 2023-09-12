@@ -20,11 +20,12 @@ const columns = [
 //   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 // ];
 
-export const TableGrid = ({dataRows}) => {
+export const TableGrid = ({dataRows, isLoading}) => {
 
   return (
     <div style={{ height: 600, width: '100%' }}>
       <DataGrid
+        loading={isLoading}
         width={'100%'}
         rows={dataRows}
         columns={columns}

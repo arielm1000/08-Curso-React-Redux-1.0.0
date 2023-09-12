@@ -3,6 +3,7 @@ import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField
 
 import { dataCategories } from '../data/dataCategories';
 import { useForm } from '../hooks/useForm';
+import { useSelector } from 'react-redux';
 
 export const ProductCreatePage = () => {
 
@@ -15,7 +16,8 @@ export const ProductCreatePage = () => {
   const priceRef      = useRef(null);
   const detailRef     = useRef(null);
 
-  const { form, onChangeForm } = useForm();
+  const { product } = useSelector((state) => state.products);
+  const { form, onChangeForm } = useForm(product);
   const [category, setCategory] = useState('Remeras');
 
   const onChangeCategory = (e) => {
@@ -40,6 +42,7 @@ export const ProductCreatePage = () => {
                     label='titulo' 
                     id={titleUseId} 
                     name='title'
+                    value={form.title}
                     onChange={
                       (e) => onChangeForm(e.target.value, titleRef.current.name)
                     }
@@ -57,7 +60,7 @@ export const ProductCreatePage = () => {
                     labelId={categoryUseId}
                     id={categoryUseId}
                     label="Categoria"
-                    value={category}
+                    value={form.category}
                     onChange={onChangeCategory}
                   >
                     <MenuItem value=""><em>None</em></MenuItem>
@@ -78,6 +81,7 @@ export const ProductCreatePage = () => {
                     label="Precio" 
                     id={priceUseId}
                     name='price' 
+                    value={form.price}
                     onChange={(e) => onChangeForm(e.target.value, priceRef.current.name)}
                   />
                 </FormControl>
@@ -94,6 +98,7 @@ export const ProductCreatePage = () => {
                     label="Detalle" 
                     id={detailUseId}
                     name='detail' 
+                    value={form.description}
                     onChange={(e) => onChangeForm(e.target.value, detailRef.current.name)}
                   />
                 </FormControl>
